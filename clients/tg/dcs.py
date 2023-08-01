@@ -41,9 +41,24 @@ class Message:
 
 
 @dataclass
+class CallbackQuery:
+    id: str
+    from_: MessageFrom = field(metadata={"data_key": "from"})
+    message: Optional[Message] = None
+    inline_message_id: Optional[str] = None
+    chat_instance: Optional[str] = None
+    data: Optional[str] = None
+    game_short_name: Optional[str] = None
+
+    class Meta:
+        unknown = EXCLUDE
+
+
+@dataclass
 class UpdateObj:
     update_id: int
     message: Message
+    callback_query: Optional[CallbackQuery] = None
 
     class Meta:
         unknown = EXCLUDE
@@ -80,6 +95,18 @@ class SendAudioResponse:
 
     class Meta:
         unknown = EXCLUDE
+
+
+@dataclass
+class SendVideoResponse:
+    ok: bool
+    result: Message
+
+    Schema: ClassVar[Type[Schema]] = Schema
+
+    class Meta:
+        unknown = EXCLUDE
+
 
 @dataclass
 class SendPhotoResponse:

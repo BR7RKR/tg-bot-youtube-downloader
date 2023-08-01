@@ -4,7 +4,7 @@ from typing import Optional, Union
 import aiohttp
 from aiohttp import FormData
 
-from clients.tg.dcs import GetUpdatesResponse, SendMessageResponse, SendAudioResponse, SendPhotoResponse
+from clients.tg.dcs import GetUpdatesResponse, SendMessageResponse, SendAudioResponse, SendPhotoResponse, SendVideoResponse
 
 
 class TgClient:
@@ -55,6 +55,16 @@ class TgClient:
             async with session.post(url, data=data) as resp:
                 res_dict = await resp.json()
                 return SendAudioResponse.Schema().load(res_dict)
+
+    async def send_video(self, chat_id: int, video: Union[IOBase, str]) -> SendVideoResponse:
+        url = self.get_url("sendVideo")
+        data = FormData()
+        data.add_field('chat_id', str(chat_id))
+        data.add_field('video', video)
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, data=data) as resp:
+                res_dict = await resp.json()
+                return SendVideoResponse.Schema().load(res_dict)
 
     async def send_photo(self, chat_id: int, photo: Union[IOBase, str], caption: Optional[str] = None, reply_markup: Optional = None) -> SendPhotoResponse:
         url = self.get_url("sendPhoto")

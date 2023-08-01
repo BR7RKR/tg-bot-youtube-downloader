@@ -5,6 +5,12 @@ from pytube import YouTube
 
 class YouTubeDownloader:
 
+    def download_video(self, url: str):
+        yt = self.get_video_info(url)
+        video_id = uuid.uuid4().fields[-1]
+        vid = yt.streams.filter().first().download("video", f"{video_id}.mp4")
+        return f'{video_id}.mp4'
+
     def download_audio(self, url: str):
         yt = self.get_video_info(url)
         audio_id = uuid.uuid4().fields[-1]
