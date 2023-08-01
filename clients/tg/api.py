@@ -61,8 +61,12 @@ class TgClient:
         data = FormData()
         data.add_field('chat_id', str(chat_id))
         data.add_field('photo', photo)
-        data.add_field('caption', caption)
-        data.add_field('reply_markup', reply_markup)
+
+        if caption is not None:
+            data.add_field('caption', caption)
+        if reply_markup is not None:
+            data.add_field('reply_markup', reply_markup)
+
         async with aiohttp.ClientSession() as session:
             async with session.post(url, data=data) as resp:
                 res_dict = await resp.json()
