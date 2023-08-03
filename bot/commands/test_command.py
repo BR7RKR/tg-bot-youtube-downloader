@@ -1,5 +1,5 @@
 from bot.commands.command import Command
-from clients.tg import UpdateObj
+from clients.tg import Update
 
 
 class TestCommand(Command):
@@ -7,9 +7,12 @@ class TestCommand(Command):
         self._name = "/test"
         self._tg_client = tg_client
 
-    async def execute(self, upd: UpdateObj):
+    async def execute(self, upd: Update):
         await self._tg_client.send_message(upd.message.chat.id, upd.message.text)
 
-    def is_for(self, command_definer):
-        message = command_definer
+    def is_for(self, command_definer: Update):
+        if command_definer.message is None:
+            return False
+
+        message = command_definer.message.text
         return self._name == message

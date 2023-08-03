@@ -1,10 +1,9 @@
-import json
 import re
 
 from bot.commands.command import Command
 from bot.commands.constants import Emojis
 from bot.modules.inline_keyboard import InlineKeyboard, InlineKeyboardButton
-from clients.tg import UpdateObj, TgClient
+from clients.tg import Update, TgClient
 from utils.downloader import YouTubeDownloader
 
 
@@ -13,15 +12,18 @@ class VideoInfoCommand(Command):
         self._tg_client = tg_client
         self._downloader = downloader
 
-    async def execute(self, upd: UpdateObj):
+    async def execute(self, upd: Update):
         yt = self._downloader.get_video_info(upd.message.text)
         photo = yt.thumbnail_url
         vide_info = self._form_description(yt)
         reply_markup = self._form_reply_markup()
         await self._tg_client.send_photo(upd.message.chat.id, photo, vide_info, reply_markup)
 
-    def is_for(self, command_definer):
-        url = command_definer
+    def is_for(self, command_definer: Update):
+        if command_definer.message is None:
+            return False
+
+        url = command_definer.message.text
         url_pattern = re.compile(r'(https?://)?(www\.)?youtube\.com/watch\?v=([\w-]{11})(&.*)?$')
         return url_pattern.match(url)
 

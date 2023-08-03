@@ -55,9 +55,9 @@ class CallbackQuery:
 
 
 @dataclass
-class UpdateObj:
+class Update:
     update_id: int
-    message: Message
+    message: Optional[Message] = None
     callback_query: Optional[CallbackQuery] = None
 
     class Meta:
@@ -67,7 +67,7 @@ class UpdateObj:
 @dataclass
 class GetUpdatesResponse:
     ok: bool
-    result: List[UpdateObj]
+    result: List[Update]
 
     Schema: ClassVar[Type[Schema]] = Schema
 

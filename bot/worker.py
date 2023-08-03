@@ -3,7 +3,7 @@ from typing import List
 
 from bot.distributor import CommandDistributor
 from clients.tg import TgClient
-from clients.tg.dcs import UpdateObj
+from clients.tg.dcs import Update
 
 
 class Worker:
@@ -14,7 +14,7 @@ class Worker:
         self._tasks: List[asyncio.Task] = []
         self._command_distributor = CommandDistributor(tg_client=self.tg_client)
 
-    async def handle_update(self, upd: UpdateObj):
+    async def handle_update(self, upd: Update):
         await self._command_distributor.execute(upd)
 
     async def _worker(self):
