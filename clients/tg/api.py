@@ -1,10 +1,9 @@
 from io import IOBase
-from typing import Optional, Union, List, Dict
+from typing import Optional, Union
 
 import aiohttp
 from aiohttp import FormData
 
-from clients.tg import UpdateType
 from clients.tg.dcs import GetUpdatesResponse, SendMessageResponse, SendAudioResponse, SendPhotoResponse, \
     SendVideoResponse
 
