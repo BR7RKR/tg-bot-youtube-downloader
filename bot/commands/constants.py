@@ -1,5 +1,7 @@
 from enum import Enum
 
+YOUTUBE_PREFIX = 'https://www.youtube.com/watch?v='
+
 
 class Emojis(Enum):
     EYE = '\U0001F441'
