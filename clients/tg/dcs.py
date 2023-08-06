@@ -55,6 +55,17 @@ class CallbackQuery:
 
 
 @dataclass
+class CallBackData:
+    type: str
+    data: str
+
+    Schema: ClassVar[Type[Schema]] = Schema
+
+    class Meta:
+        unknown = EXCLUDE
+
+
+@dataclass
 class Update:
     update_id: int
     message: Optional[Message] = None
