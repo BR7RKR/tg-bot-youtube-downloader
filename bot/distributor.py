@@ -20,7 +20,11 @@ class CommandDistributor:
 
     async def execute(self, upd: Update):
         command = await self._define_command(upd)
-        await command.execute(upd)
+        try:
+            await command.execute(upd)
+        except Exception as e:
+            print(e)
+            return
 
     async def _define_command(self, command_definer) -> Command:
         for com in self._commands:
