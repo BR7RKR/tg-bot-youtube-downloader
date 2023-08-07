@@ -41,9 +41,35 @@ class Message:
 
 
 @dataclass
-class UpdateObj:
+class CallbackQuery:
+    id: str
+    from_: MessageFrom = field(metadata={"data_key": "from"})
+    message: Optional[Message] = None
+    inline_message_id: Optional[str] = None
+    chat_instance: Optional[str] = None
+    data: Optional[str] = None
+    game_short_name: Optional[str] = None
+
+    class Meta:
+        unknown = EXCLUDE
+
+
+@dataclass
+class CallBackData:
+    type: str
+    data: str
+
+    Schema: ClassVar[Type[Schema]] = Schema
+
+    class Meta:
+        unknown = EXCLUDE
+
+
+@dataclass
+class Update:
     update_id: int
-    message: Message
+    message: Optional[Message] = None
+    callback_query: Optional[CallbackQuery] = None
 
     class Meta:
         unknown = EXCLUDE
@@ -52,7 +78,7 @@ class UpdateObj:
 @dataclass
 class GetUpdatesResponse:
     ok: bool
-    result: List[UpdateObj]
+    result: List[Update]
 
     Schema: ClassVar[Type[Schema]] = Schema
 
@@ -80,6 +106,18 @@ class SendAudioResponse:
 
     class Meta:
         unknown = EXCLUDE
+
+
+@dataclass
+class SendVideoResponse:
+    ok: bool
+    result: Message
+
+    Schema: ClassVar[Type[Schema]] = Schema
+
+    class Meta:
+        unknown = EXCLUDE
+
 
 @dataclass
 class SendPhotoResponse:

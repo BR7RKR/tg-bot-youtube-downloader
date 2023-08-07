@@ -1,15 +1,15 @@
-from abc import ABCMeta, abstractmethod, abstractproperty, ABC
+from abc import ABCMeta, abstractmethod
 
-from clients.tg import UpdateObj
+from clients.tg import Update
 
 
 class Command:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def execute(self, upd: UpdateObj):
+    def execute(self, upd: Update):
         pass
 
     @abstractmethod
-    def is_for(self, command_definer):
+    def is_for(self, command_definer: Update):
         pass

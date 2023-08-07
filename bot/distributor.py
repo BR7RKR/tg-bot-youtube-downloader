@@ -1,8 +1,9 @@
 from bot.commands.command import Command
 from bot.commands.download_audio_command import DownloadAudioCommand
+from bot.commands.download_video_command import DownloadVideoCommand
 from bot.commands.test_command import TestCommand
 from bot.commands.video_info_command import VideoInfoCommand
-from clients.tg import UpdateObj
+from clients.tg import Update
 from utils.downloader import YouTubeDownloader
 
 
@@ -12,13 +13,18 @@ class CommandDistributor:
 
         self._commands = {
             TestCommand(tg_client=tg_client),
-            #DownloadAudioCommand(tg_client=tg_client, downloader=self._youtube_downloader),
+            DownloadAudioCommand(tg_client=tg_client, downloader=self._youtube_downloader),
+            DownloadVideoCommand(tg_client=tg_client, downloader=self._youtube_downloader),
             VideoInfoCommand(tg_client=tg_client, downloader=self._youtube_downloader)
         }
 
-    async def execute(self, upd: UpdateObj):
-        command = await self._define_command(upd.message.text)
-        await command.execute(upd)
+    async def execute(self, upd: Update):
+        command = await self._define_command(upd)
+        try:
+            await command.execute(upd)
+        except Exception as e:
+            print(e)
+            return
 
     async def _define_command(self, command_definer) -> Command:
         for com in self._commands:
