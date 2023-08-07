@@ -15,7 +15,8 @@ class DownloadVideoCommand(Command):
         self._url = YOUTUBE_PREFIX
 
     async def execute(self, upd: Update):
-        title = self._downloader.download_video(url=self._url)
+        title = self._downloader.download_video(self._url)
+        self._url = YOUTUBE_PREFIX
         file = await aiofiles.open(f'video/{title}', 'rb')
         try:
             video = await file.read()
@@ -32,5 +33,7 @@ class DownloadVideoCommand(Command):
         data: str = command_definer.callback_query.data
         data_json = json.loads(data)
         data_obj: CallBackData = CallBackData.Schema().load(data_json)
-        self._url += data_obj.data
-        return data_obj.type == 'video'
+        if data_obj.type == 'video':
+            self._url += data_obj.data
+            return True
+        return False

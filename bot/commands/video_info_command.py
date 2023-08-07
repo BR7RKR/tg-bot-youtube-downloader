@@ -4,7 +4,7 @@ import re
 from pytube import exceptions as pytube_ex
 
 from bot.commands.command import Command
-from bot.commands.constants import Emojis, YOUTUBE_PREFIX
+from bot.commands.constants import Emojis, YOUTUBE_LINK_PATTERN
 from bot.modules.inline_keyboard import InlineKeyboard, InlineKeyboardButton
 from clients.tg import Update, TgClient
 from utils.downloader import YouTubeDownloader
@@ -35,13 +35,13 @@ class VideoInfoCommand(Command):
             return False
 
         url = command_definer.message.text
-        url_pattern = re.compile(r'(https?://)?(www\.)?youtube\.com/watch\?v=([\w-]{11})(&.*)?$')
+        url_pattern = re.compile(YOUTUBE_LINK_PATTERN)
         return url_pattern.match(url)
 
     def _form_reply_markup(self) -> str:
         keyboard = InlineKeyboard()
-        prefix = YOUTUBE_PREFIX
-        id = self._url.replace(prefix, "")
+        match = re.search(YOUTUBE_LINK_PATTERN, self._url)
+        id = match.group(1)
         video_data = {"type": "video", "data": f"{id}"}
         audio_data = {"type": "audio", "data": f"{id}"}
         keyboard.add_button(button=InlineKeyboardButton(f"{Emojis.CAMERA.value}mp4", json.dumps(video_data)))
@@ -54,5 +54,5 @@ class VideoInfoCommand(Command):
         publish_date = str(yt.publish_date)[:-9]
         author = yt.author
         duration = yt.length
-        vide_info = f"{title}\n{Emojis.EYE.value}{views}\n{Emojis.CALENDAR.value}{publish_date}\n{Emojis.MAN.value}{author}\n{Emojis.CLOCK_1.value}{duration}"
+        vide_info = f"{title}\n{Emojis.EYE.value}{views}\n{Emojis.CALENDAR.value}{publish_date}\n{Emojis.MAN.value}{author}\n{Emojis.CLOCK_1.value}{duration}s"
         return vide_info

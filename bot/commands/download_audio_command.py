@@ -15,7 +15,8 @@ class DownloadAudioCommand(Command):
         self._url = YOUTUBE_PREFIX
 
     async def execute(self, upd: Update):
-        title = self._downloader.download_audio(url=self._url)
+        title = self._downloader.download_audio(self._url)
+        self._url = YOUTUBE_PREFIX
         file = await aiofiles.open(f'audio/{title}', 'rb')
         try:
             audio = await file.read()
@@ -32,7 +33,9 @@ class DownloadAudioCommand(Command):
         data: str = command_definer.callback_query.data
         data_json = json.loads(data)
         data_obj: CallBackData = CallBackData.Schema().load(data_json)
-        self._url += data_obj.data
-        return data_obj.type == 'audio'
+        if data_obj.type == 'audio':
+            self._url += data_obj.data
+            return True
+        return False
 
 
