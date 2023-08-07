@@ -1,6 +1,5 @@
 import asyncio
 import datetime
-import os
 
 from bot.base import Bot
 from config import BOT_TOKEN, WORKERS_AMOUNT_DEFAULT
