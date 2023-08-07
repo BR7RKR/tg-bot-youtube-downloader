@@ -1,6 +1,7 @@
 from enum import Enum
 
 YOUTUBE_PREFIX = 'https://www.youtube.com/watch?v='
+YOUTUBE_LINK_PATTERN = r'(?:(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?\S*v=)?|^(?!.*watch\?\S*v=))(.*?)($|\s)'
 
 
 class Emojis(Enum):
