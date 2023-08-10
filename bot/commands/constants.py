@@ -1,7 +1,9 @@
 from enum import Enum
 
 YOUTUBE_PREFIX = 'https://www.youtube.com/watch?v='
-YOUTUBE_LINK_PATTERN = r'(?:(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?\S*v=)?|^(?!.*watch\?\S*v=))(.*?)($|\s)'
+YOUTUBE_LINK_PATTERN = r'(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?'
+HELP_ANSWER = 'Для использования бота требуется отправить ссылку на ютуб видео в чат. Далее нужно выбрать нужный формат для скачивания и подождать. \n' \
+              'Готово!'
 
 
 class Emojis(Enum):

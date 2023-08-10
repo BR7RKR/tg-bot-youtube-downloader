@@ -1,8 +1,9 @@
 from bot.commands.command import Command
-from bot.commands.download_audio_command import DownloadAudioCommand
-from bot.commands.download_video_command import DownloadVideoCommand
-from bot.commands.test_command import TestCommand
-from bot.commands.video_info_command import VideoInfoCommand
+from bot.commands.download_audio import DownloadAudioCommand
+from bot.commands.download_video import DownloadVideoCommand
+from bot.commands.help import HelpCommand
+from bot.commands.test import TestCommand
+from bot.commands.video_info import VideoInfoCommand
 from clients.tg import Update
 from utils.downloader import YouTubeDownloader
 
@@ -15,7 +16,8 @@ class CommandDistributor:
             TestCommand(tg_client=tg_client),
             DownloadAudioCommand(tg_client=tg_client, downloader=self._youtube_downloader),
             DownloadVideoCommand(tg_client=tg_client, downloader=self._youtube_downloader),
-            VideoInfoCommand(tg_client=tg_client, downloader=self._youtube_downloader)
+            VideoInfoCommand(tg_client=tg_client, downloader=self._youtube_downloader),
+            HelpCommand(tg_client=tg_client)
         }
 
     async def execute(self, upd: Update):
