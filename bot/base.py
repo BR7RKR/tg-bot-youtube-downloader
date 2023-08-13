@@ -29,5 +29,5 @@ class Bot:
 
     async def stop(self):
         await self._poller.stop()
-        await self._worker.start()
+        await self._worker.stop()
         await self._session.close()
