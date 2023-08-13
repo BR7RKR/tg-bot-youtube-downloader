@@ -2,6 +2,7 @@ import asyncio
 from typing import List
 
 from bot.distributor import CommandDistributor
+from bot.exceptions import MissingTgClientError
 from clients.tg import TgClient
 from clients.tg.dcs import Update
 
@@ -16,7 +17,7 @@ class Worker:
 
     async def handle_update(self, upd: Update):
         if self.tg_client is None:
-            raise Exception('missing tg client')
+            raise MissingTgClientError(Worker.__name__)
 
         await self._command_distributor.execute(upd)
 
