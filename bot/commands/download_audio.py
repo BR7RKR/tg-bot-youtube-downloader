@@ -22,7 +22,7 @@ class DownloadAudioCommand(Command):
             audio = await file.read()
             await self._tg_client.send_audio(upd.callback_query.message.chat.id, audio)
         except Exception as e:
-            await self._tg_client.send_message(upd.message.chat.id, "Не получилось отправить аудио")
+            await self._tg_client.send_message(upd.callback_query.message.chat.id, "Не получилось отправить аудио")
         finally:
             await file.close()
             os.remove(f'audio/{title}')

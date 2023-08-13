@@ -7,12 +7,12 @@ from clients.tg.dcs import Update
 
 
 class Worker:
-    def __init__(self, token: str, queue: asyncio.Queue, concurrent_workers: int):
-        self.tg_client = TgClient(token)
+    def __init__(self, tg_client: TgClient, queue: asyncio.Queue, concurrent_workers: int):
+        self.tg_client = tg_client
         self.queue = queue
         self.concurrent_workers = concurrent_workers
         self._tasks: List[asyncio.Task] = []
-        self._command_distributor = CommandDistributor(tg_client=self.tg_client)
+        self._command_distributor = CommandDistributor(tg_client=tg_client)
 
     async def handle_update(self, upd: Update):
         await self._command_distributor.execute(upd)

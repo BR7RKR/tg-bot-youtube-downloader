@@ -22,6 +22,10 @@ class CommandDistributor:
 
     async def execute(self, upd: Update):
         command = await self._define_command(upd)
+
+        if command is None:
+            return
+
         try:
             await command.execute(upd)
         except Exception as e:

@@ -6,12 +6,15 @@ from clients.tg import TgClient
 
 
 class Poller:
-    def __init__(self, token: str, queue: asyncio.Queue):
-        self.tg_client = TgClient(token)
+    def __init__(self, tg_client: TgClient, queue: asyncio.Queue):
+        self.tg_client = tg_client
         self.queue = queue
         self._task: Optional[Task] = None
 
     async def _worker(self):
+        if self.tg_client is None:
+            raise Exception('missing tg client')
+
         offset = 0
         while True:
             res = await self.tg_client.get_updates_in_objects(offset=offset, timeout=60)

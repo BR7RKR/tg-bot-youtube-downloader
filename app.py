@@ -7,7 +7,6 @@ from config import BOT_TOKEN, WORKERS_AMOUNT_DEFAULT
 
 def run():
     loop = asyncio.get_event_loop()
-
     bot = Bot(BOT_TOKEN, WORKERS_AMOUNT_DEFAULT)
     try:
         print('bot has started')
