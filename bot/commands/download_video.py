@@ -22,7 +22,7 @@ class DownloadVideoCommand(Command):
             video = await file.read()
             await self._tg_client.send_video(upd.callback_query.message.chat.id, video)
         except Exception as e:
-            await self._tg_client.send_message(upd.message.chat.id, "Не получилось отправить видео")
+            await self._tg_client.send_message(upd.callback_query.message.chat.id, "Не получилось отправить видео")
         finally:
             await file.close()
             os.remove(f'video/{title}')
