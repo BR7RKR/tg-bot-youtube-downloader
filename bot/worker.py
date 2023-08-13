@@ -18,10 +18,7 @@ class Worker:
         if self.tg_client is None:
             raise Exception('missing tg client')
 
-        try:
-            await self._command_distributor.execute(upd)
-        except Exception as e:
-            print(e)
+        await self._command_distributor.execute(upd)
 
     async def _worker(self):
         while True:
