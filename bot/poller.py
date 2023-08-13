@@ -2,6 +2,7 @@ import asyncio
 from asyncio import Task
 from typing import Optional
 
+from bot.exceptions import MissingTgClientError
 from clients.tg import TgClient
 
 
@@ -13,7 +14,7 @@ class Poller:
 
     async def _worker(self):
         if self.tg_client is None:
-            raise Exception('missing tg client')
+            raise MissingTgClientError(Poller.__name__)
 
         offset = 0
         while True:
