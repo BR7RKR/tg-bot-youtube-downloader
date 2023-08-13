@@ -15,7 +15,13 @@ class Worker:
         self._command_distributor = CommandDistributor(tg_client=tg_client)
 
     async def handle_update(self, upd: Update):
-        await self._command_distributor.execute(upd)
+        if self.tg_client is None:
+            raise Exception('missing tg client')
+
+        try:
+            await self._command_distributor.execute(upd)
+        except Exception as e:
+            print(e)
 
     async def _worker(self):
         while True:
