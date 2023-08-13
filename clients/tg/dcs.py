@@ -35,6 +35,7 @@ class Message:
     from_: MessageFrom = field(metadata={"data_key": "from"})
     chat: Chat
     text: Optional[str] = None
+    has_protected_content: Optional[bool] = False
 
     class Meta:
         unknown = EXCLUDE
@@ -121,6 +122,17 @@ class SendVideoResponse:
 
 @dataclass
 class SendPhotoResponse:
+    ok: bool
+    result: Message
+
+    Schema: ClassVar[Type[Schema]] = Schema
+
+    class Meta:
+        unknown = EXCLUDE
+
+
+@dataclass
+class EditMessageReplyMarkupResponse:
     ok: bool
     result: Message
 

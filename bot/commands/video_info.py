@@ -23,7 +23,7 @@ class VideoInfoCommand(Command):
             photo = yt.thumbnail_url
             vide_info = self._form_description(yt)
             reply_markup = self._form_reply_markup()
-            await self._tg_client.send_photo(upd.message.chat.id, photo, vide_info, reply_markup)
+            await self._tg_client.send_photo(upd.message.chat.id, photo, vide_info, reply_markup, True)
         except pytube_ex.VideoUnavailable as e:
             await self._tg_client.send_message(upd.message.chat.id, "Не получилось найти видео. Проверьте правильность ссылки.")
             return
