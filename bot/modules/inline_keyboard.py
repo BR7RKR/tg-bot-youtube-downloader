@@ -13,6 +13,11 @@ class InlineKeyboard:
 
     @property
     def reply_markup(self):
+        if self._keys.count == 0:
+            return json.dumps({
+                'inline_keyboard': []
+            })
+
         return json.dumps({
             'inline_keyboard': [self._keys]
         })

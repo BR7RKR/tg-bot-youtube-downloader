@@ -5,6 +5,7 @@ import aiofiles
 
 from bot.commands.command import Command
 from bot.commands.constants import YOUTUBE_PREFIX
+from bot.modules.inline_keyboard import InlineKeyboard
 from clients.tg import Update, CallBackData
 
 
@@ -25,6 +26,10 @@ class DownloadAudioCommand(Command):
             await self._tg_client.send_message(upd.callback_query.message.chat.id, "Не получилось отправить аудио")
         finally:
             await file.close()
+            keyboard = InlineKeyboard()
+            await self._tg_client.edit_message_reply_markup(upd.callback_query.message.chat.id,
+                                                            upd.callback_query.message.message_id,
+                                                            reply_markup=keyboard.reply_markup)
             os.remove(f'audio/{title}')
 
     def is_for(self, command_definer: Update):
