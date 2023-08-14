@@ -5,7 +5,7 @@ import aiofiles
 
 from bot.commands.command import Command
 from bot.commands.constants import YOUTUBE_PREFIX
-from bot.modules.inline_keyboard import InlineKeyboard, InlineKeyboardButton
+from bot.modules.inline_keyboard import InlineKeyboard
 from clients.tg import Update, CallBackData
 
 
