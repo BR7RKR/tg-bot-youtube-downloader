@@ -1,6 +1,6 @@
-from bot.clients.tg import Update
-from bot.engine.commands.command import Command
-from bot.engine.commands.constants import HELP_ANSWER
+from clients.tg import Update
+from engine.commands.command import Command
+from engine.commands.constants import HELP_ANSWER
 
 
 class HelpCommand(Command):

@@ -1,5 +1,5 @@
-from bot.clients.tg import Update
-from bot.engine.commands.command import Command
+from clients.tg import Update
+from engine.commands.command import Command
 
 
 class TestCommand(Command):

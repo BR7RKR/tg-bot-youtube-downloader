@@ -3,10 +3,10 @@ import os
 
 import aiofiles
 
-from bot.clients.tg import Update, CallBackData
-from bot.engine.commands.command import Command
-from bot.engine.commands.constants import YOUTUBE_PREFIX
-from bot.engine.modules.inline_keyboard import InlineKeyboard
+from clients.tg import Update, CallBackData
+from engine.commands.command import Command
+from engine.commands.constants import YOUTUBE_PREFIX
+from engine.modules.inline_keyboard import InlineKeyboard
 
 
 class DownloadAudioCommand(Command):

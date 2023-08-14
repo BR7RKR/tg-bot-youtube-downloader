@@ -4,9 +4,9 @@ from typing import Optional
 import aiohttp
 from aiohttp import ClientSession
 
-from bot.engine.poller import Poller
-from bot.engine.worker import Worker
-from bot.clients.tg import TgClient
+from engine.poller import Poller
+from engine.worker import Worker
+from clients.tg import TgClient
 
 
 class Bot:
