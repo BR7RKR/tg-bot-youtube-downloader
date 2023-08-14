@@ -1,10 +1,9 @@
 import asyncio
 from typing import List
 
-from bot.distributor import CommandDistributor
-from bot.exceptions import MissingTgClientError
-from clients.tg import TgClient
-from clients.tg.dcs import Update
+from bot.clients.tg import TgClient, Update
+from bot.engine.distributor import CommandDistributor
+from bot.engine.exceptions import MissingTgClientError
 
 
 class Worker:

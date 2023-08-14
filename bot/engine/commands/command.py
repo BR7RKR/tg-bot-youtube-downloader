@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
-from clients.tg import Update
+from bot.clients.tg import Update
 
 
 class Command:

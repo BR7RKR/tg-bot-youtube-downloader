@@ -3,11 +3,11 @@ import re
 
 from pytube import exceptions as pytube_ex
 
-from bot.commands.command import Command
-from bot.commands.constants import Emojis, YOUTUBE_LINK_PATTERN
-from bot.modules.inline_keyboard import InlineKeyboard, InlineKeyboardButton
-from clients.tg import Update, TgClient
-from utils.downloader import YouTubeDownloader
+from bot.clients.tg import TgClient, Update
+from bot.engine.commands.command import Command
+from bot.engine.commands.constants import YOUTUBE_LINK_PATTERN, Emojis
+from bot.engine.modules.inline_keyboard import InlineKeyboard, InlineKeyboardButton
+from bot.utils.downloader import YouTubeDownloader
 
 
 class VideoInfoCommand(Command):
