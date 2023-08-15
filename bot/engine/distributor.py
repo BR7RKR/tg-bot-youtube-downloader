@@ -1,9 +1,9 @@
-from engine.commands.command import Command
-from engine.commands.download_audio import DownloadAudioCommand
-from engine.commands.download_video import DownloadVideoCommand
-from engine.commands.help import HelpCommand
-from engine.commands.test import TestCommand
-from engine.commands.video_info import VideoInfoCommand
+from engine.commands import Command
+from engine.commands import DownloadAudioCommand
+from engine.commands import DownloadVideoCommand
+from engine.commands import HelpCommand
+from engine.commands import TestCommand
+from engine.commands import VideoInfoCommand
 from clients.tg import Update
 from utils.downloaders import YouTubeDownloader
 
