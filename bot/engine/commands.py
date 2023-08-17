@@ -28,7 +28,7 @@ class Command:
 
 
 class DownloadAudioCommand(Command):
-    def __init__(self, tg_client, downloader):
+    def __init__(self, tg_client: TgClient, downloader: YouTubeDownloader):
         self._tg_client = tg_client
         self._downloader = downloader
         self._url = YOUTUBE_PREFIX
@@ -63,7 +63,7 @@ class DownloadAudioCommand(Command):
 
 
 class DownloadVideoCommand(Command):
-    def __init__(self, tg_client, downloader):
+    def __init__(self, tg_client: TgClient, downloader: YouTubeDownloader):
         self._tg_client = tg_client
         self._downloader = downloader
         self._url = YOUTUBE_PREFIX
@@ -98,7 +98,7 @@ class DownloadVideoCommand(Command):
 
 
 class HelpCommand(Command):
-    def __init__(self, tg_client):
+    def __init__(self, tg_client: TgClient):
         self._name = "/help"
         self._tg_client = tg_client
 
@@ -114,7 +114,7 @@ class HelpCommand(Command):
 
 
 class TestCommand(Command):
-    def __init__(self, tg_client):
+    def __init__(self, tg_client: TgClient):
         self._name = "/test"
         self._tg_client = tg_client
 

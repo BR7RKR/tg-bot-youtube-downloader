@@ -4,7 +4,7 @@ from typing import Optional
 import aiohttp
 from aiohttp import ClientSession
 
-
+from engine.distributor import CommandDistributor
 from engine.poller import Poller
 from engine.worker import Worker
 from clients.tg import TgClient
@@ -24,7 +24,7 @@ class Bot:
         self._session = aiohttp.ClientSession()
         self._tg_client = TgClient(self._session, self._token)
         self._poller = Poller(self._tg_client, self._queue)
-        self._worker = Worker(self._tg_client, self._queue, self._worker_count)
+        self._worker = Worker(self._queue, self._worker_count, CommandDistributor(self._tg_client))
         await self._poller.start()
         await self._worker.start()
 

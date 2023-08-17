@@ -7,17 +7,13 @@ from engine.exceptions import MissingTgClientError
 
 
 class Worker:
-    def __init__(self, tg_client: TgClient, queue: asyncio.Queue, concurrent_workers: int):
-        self.tg_client = tg_client
+    def __init__(self, queue: asyncio.Queue, concurrent_workers: int, command_distributor: CommandDistributor):
         self.queue = queue
         self.concurrent_workers = concurrent_workers
         self._tasks: List[asyncio.Task] = []
-        self._command_distributor = CommandDistributor(tg_client=tg_client)
+        self._command_distributor = command_distributor
 
     async def handle_update(self, upd: Update):
-        if self.tg_client is None:
-            raise MissingTgClientError(Worker.__name__)
-
         await self._command_distributor.execute(upd)
 
     async def _worker(self):
