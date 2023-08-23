@@ -5,13 +5,13 @@ import re
 import aiofiles
 from pytube.exceptions import VideoUnavailable
 
-from clients.tg import CallBackData, TgClient
-from engine.constants import YOUTUBE_PREFIX, HELP_ANSWER, YOUTUBE_LINK_PATTERN, Emojis
-from engine.modules.keyboards import InlineKeyboard, InlineKeyboardButton
+from bot.clients.tg import CallBackData, TgClient
+from bot.engine.constants import YOUTUBE_PREFIX, HELP_ANSWER, YOUTUBE_LINK_PATTERN, Emojis
+from bot.engine.modules.keyboards import InlineKeyboard, InlineKeyboardButton
 from abc import ABCMeta, abstractmethod
 
-from clients.tg import Update
-from utils.downloaders import YouTubeDownloader
+from bot.clients.tg import Update
+from bot.utils.downloaders import YouTubeDownloader
 
 
 # Abstract command

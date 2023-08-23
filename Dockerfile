@@ -5,5 +5,6 @@ WORKDIR /app
 COPY ./bot /app/bot
 COPY ./requirements.txt /app
 COPY ./pytube /app/pytube
+COPY app.py /app
 RUN pip install -r requirements.txt
-CMD ["python", "bot/app.py"]
+CMD ["python", "app.py"]

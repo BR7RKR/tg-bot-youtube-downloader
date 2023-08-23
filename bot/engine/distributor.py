@@ -1,11 +1,11 @@
-from engine.commands import Command
-from engine.commands import DownloadAudioCommand
-from engine.commands import DownloadVideoCommand
-from engine.commands import HelpCommand
-from engine.commands import TestCommand
-from engine.commands import VideoInfoCommand
-from clients.tg import Update
-from utils.downloaders import YouTubeDownloader
+from bot.engine.commands import Command
+from bot.engine.commands import DownloadAudioCommand
+from bot.engine.commands import DownloadVideoCommand
+from bot.engine.commands import HelpCommand
+from bot.engine.commands import TestCommand
+from bot.engine.commands import VideoInfoCommand
+from bot.clients.tg import Update
+from bot.utils.downloaders import YouTubeDownloader
 
 
 class CommandDistributor:

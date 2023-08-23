@@ -1,8 +1,8 @@
 import asyncio
 import datetime
 
-from config import BOT_TOKEN, WORKERS_AMOUNT_DEFAULT
-from engine.base import Bot
+from bot.config import BOT_TOKEN, WORKERS_AMOUNT_DEFAULT
+from bot.engine.base import Bot
 
 
 def run():
