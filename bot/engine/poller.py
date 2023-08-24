@@ -2,8 +2,8 @@ import asyncio
 from asyncio import Task
 from typing import Optional
 
-from bot.engine.exceptions import MissingTgClientError
-from bot.clients.tg import TgClient
+from engine.exceptions import MissingTgClientError
+from clients.tg import TgClient
 
 
 class Poller:

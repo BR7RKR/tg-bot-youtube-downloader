@@ -1,17 +1,13 @@
-from bot.engine.commands import Command
-from bot.engine.commands import DownloadAudioCommand
-from bot.engine.commands import DownloadVideoCommand
-from bot.engine.commands import HelpCommand
-from bot.engine.commands import TestCommand
-from bot.engine.commands import VideoInfoCommand
-from bot.clients.tg import Update
-from bot.utils.downloaders import YouTubeDownloader
+# import bot.engine.commands as commands
+
+from clients.tg import Update
+from utils.downloaders import YouTubeDownloader
+from engine.commands import TestCommand, DownloadAudioCommand, DownloadVideoCommand, VideoInfoCommand, HelpCommand, Command
 
 
 class CommandDistributor:
     def __init__(self, tg_client):
         self._youtube_downloader = YouTubeDownloader()
-
         self._commands = {
             TestCommand(tg_client=tg_client),
             DownloadAudioCommand(tg_client=tg_client, downloader=self._youtube_downloader),
@@ -19,6 +15,15 @@ class CommandDistributor:
             VideoInfoCommand(tg_client=tg_client, downloader=self._youtube_downloader),
             HelpCommand(tg_client=tg_client)
         }
+
+    # def set_commands(self):
+    #     command_list = []
+    #     for cls in commands.__dict__.values():
+    #         if isinstance(cls, type) and issubclass(cls, commands.Command) and cls.__name__ == "Command":
+    #             command_list.append(cls())
+    #
+    #     return command_list
+
 
     async def execute(self, upd: Update):
         command = await self._define_command(upd)

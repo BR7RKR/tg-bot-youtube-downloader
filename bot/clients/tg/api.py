@@ -3,7 +3,7 @@ from typing import Optional, Union
 
 from aiohttp import FormData
 
-from bot.clients.tg.dcs import GetUpdatesResponse, SendMessageResponse, SendAudioResponse, SendPhotoResponse, \
+from .dcs import GetUpdatesResponse, SendMessageResponse, SendAudioResponse, SendPhotoResponse, \
     SendVideoResponse, EditMessageReplyMarkupResponse
 
 
