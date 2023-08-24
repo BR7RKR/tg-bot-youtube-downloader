@@ -3,7 +3,6 @@ from typing import List
 
 from clients.tg import TgClient, Update
 from engine.distributor import CommandDistributor
-from engine.exceptions import MissingTgClientError
 
 
 class Worker:
