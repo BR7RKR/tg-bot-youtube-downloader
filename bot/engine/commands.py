@@ -1,7 +1,6 @@
 import json
 import os
 import re
-import time
 
 import aiofiles
 from pytube.exceptions import VideoUnavailable
@@ -13,6 +12,7 @@ from abc import ABCMeta, abstractmethod
 
 from clients.tg import Update
 from utils.downloaders import YouTubeDownloader
+from utils.formatters import TimeFormatter
 
 
 # Abstract command
@@ -173,6 +173,6 @@ class VideoInfoCommand(Command):
         views = yt.views
         publish_date = str(yt.publish_date)[:-9]
         author = yt.author
-        duration = time.strftime('%H:%M:%S', time.gmtime(yt.length))
+        duration = TimeFormatter.format_time(yt.length)
         vide_info = f"{title}\n{Emojis.EYE.value}{views}\n{Emojis.CALENDAR.value}{publish_date}\n{Emojis.MAN.value}{author}\n{Emojis.CLOCK_1.value}{duration}"
         return vide_info
