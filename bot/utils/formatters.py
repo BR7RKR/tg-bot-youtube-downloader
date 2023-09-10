@@ -1,9 +1,12 @@
-import time
+from engine.exceptions import NegativeTimeError
 
 
 class TimeFormatter:
     @staticmethod
-    def format_time(seconds) -> str:
+    def format_time(seconds: int) -> str:
+        if seconds < 0:
+            raise NegativeTimeError
+
         hours = seconds // (60 * 60)
         minutes = (seconds % (60 * 60)) // 60
         seconds = seconds % 60
