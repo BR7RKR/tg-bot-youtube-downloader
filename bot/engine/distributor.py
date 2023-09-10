@@ -1,29 +1,15 @@
-# import bot.engine.commands as commands
+import inspect
 
-from clients.tg import Update
+from clients.tg import Update, TgClient
+from engine import commands
 from utils.downloaders import YouTubeDownloader
-from engine.commands import TestCommand, DownloadAudioCommand, DownloadVideoCommand, VideoInfoCommand, HelpCommand, Command
 
 
 class CommandDistributor:
-    def __init__(self, tg_client):
+    def __init__(self, tg_client: TgClient):
         self._youtube_downloader = YouTubeDownloader()
-        self._commands = {
-            TestCommand(tg_client=tg_client),
-            DownloadAudioCommand(tg_client=tg_client, downloader=self._youtube_downloader),
-            DownloadVideoCommand(tg_client=tg_client, downloader=self._youtube_downloader),
-            VideoInfoCommand(tg_client=tg_client, downloader=self._youtube_downloader),
-            HelpCommand(tg_client=tg_client)
-        }
-
-    # def set_commands(self):
-    #     command_list = []
-    #     for cls in commands.__dict__.values():
-    #         if isinstance(cls, type) and issubclass(cls, commands.Command) and cls.__name__ == "Command":
-    #             command_list.append(cls())
-    #
-    #     return command_list
-
+        self._tg_client = tg_client
+        self._commands = self._set_commands()
 
     async def execute(self, upd: Update):
         command = await self._define_command(upd)
@@ -37,8 +23,31 @@ class CommandDistributor:
             print(e)
             return
 
-    async def _define_command(self, command_definer) -> Command:
+    async def _define_command(self, command_definer) -> commands.Command:
         for com in self._commands:
             if com.is_for(command_definer):
                 return com
 
+    def _set_commands(self):
+        command_list = []
+        for cls in commands.__dict__.values():
+            if isinstance(cls, type) and issubclass(cls, commands.Command) and cls != commands.Command:
+                constructor = cls.__init__
+                params = inspect.signature(constructor).parameters
+                args = []
+
+                for param in params.values():
+                    if param.name == 'self':
+                        continue
+                    if param.annotation == TgClient:
+                        args.append(self._tg_client)
+                        continue
+                    if param.annotation == YouTubeDownloader:
+                        args.append(self._youtube_downloader)
+                        continue
+                    else:
+                        raise Exception("param's type not defined")
+
+                command_list.append(cls(*args))
+
+        return command_list
