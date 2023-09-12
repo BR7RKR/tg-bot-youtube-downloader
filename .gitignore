@@ -139,5 +139,5 @@ cython_debug/
 .idea
 
 # Additional
-/audio/
-/video/
+/bot/audio/
+/bot/video/
