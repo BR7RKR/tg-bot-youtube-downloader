@@ -4,6 +4,7 @@ YOUTUBE_PREFIX = 'https://www.youtube.com/watch?v='
 YOUTUBE_LINK_PATTERN = r'(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?'
 HELP_ANSWER = 'Для использования бота требуется отправить ссылку на ютуб видео в чат. Далее нужно выбрать нужный формат для скачивания и подождать. \n' \
               'Готово!'
+START_ANSWER = 'Добро пожаловать!\nДля продолжения скиньте ссылку на ютуб видео'
 
 
 class Emojis(Enum):

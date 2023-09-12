@@ -6,7 +6,7 @@ import aiofiles
 from pytube.exceptions import VideoUnavailable
 
 from clients.tg import CallBackData, TgClient
-from engine.constants import YOUTUBE_PREFIX, HELP_ANSWER, YOUTUBE_LINK_PATTERN, Emojis
+from engine.constants import YOUTUBE_PREFIX, HELP_ANSWER, YOUTUBE_LINK_PATTERN, Emojis, START_ANSWER
 from engine.modules.keyboards import InlineKeyboard, InlineKeyboardButton
 from abc import ABCMeta, abstractmethod
 
@@ -176,3 +176,19 @@ class VideoInfoCommand(Command):
         duration = TimeFormatter.format_time(yt.length)
         vide_info = f"{title}\n{Emojis.EYE.value}{views}\n{Emojis.CALENDAR.value}{publish_date}\n{Emojis.MAN.value}{author}\n{Emojis.CLOCK_1.value}{duration}"
         return vide_info
+
+
+class StartCommand(Command):
+    def __init__(self, tg_client: TgClient):
+        self._name = "/start"
+        self._tg_client = tg_client
+
+    async def execute(self, upd: Update):
+        await self._tg_client.send_message(upd.message.chat.id, START_ANSWER)
+
+    def is_for(self, command_definer: Update):
+        if command_definer.message is None:
+            return False
+
+        message = command_definer.message.text
+        return self._name == message
