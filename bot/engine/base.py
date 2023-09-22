@@ -4,6 +4,7 @@ from typing import Optional
 import aiohttp
 from aiohttp import ClientSession
 
+from database.repositories import UserRepository
 from engine.distributor import CommandDistributor
 from engine.poller import Poller
 from engine.worker import Worker
@@ -19,12 +20,18 @@ class Bot:
         self._poller = None
         self._worker = None
         self._worker_count = worker_count
+        self._user_repo = UserRepository(host="localhost",  # TODO: убрать хардкод
+                                         port=5432,
+                                         database="postgres",
+                                         user="postgres",
+                                         password="mysecretpassword")
 
     async def start(self):
         self._session = aiohttp.ClientSession()
         self._tg_client = TgClient(self._session, self._token)
         self._poller = Poller(self._tg_client, self._queue)
-        self._worker = Worker(self._queue, self._worker_count, CommandDistributor(self._tg_client))
+        self._worker = Worker(self._queue, self._worker_count, CommandDistributor(self._tg_client, self._user_repo))
+        await self._user_repo.create_table()
         await self._poller.start()
         await self._worker.start()
 
