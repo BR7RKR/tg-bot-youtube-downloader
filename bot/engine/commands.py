@@ -6,6 +6,8 @@ import aiofiles
 from pytube.exceptions import VideoUnavailable
 
 from clients.tg import CallBackData, TgClient
+from database.models import User
+from database.repositories import UserRepository
 from engine.constants import YOUTUBE_PREFIX, HELP_ANSWER, YOUTUBE_LINK_PATTERN, Emojis, START_ANSWER
 from engine.modules.keyboards import InlineKeyboard, InlineKeyboardButton
 from abc import ABCMeta, abstractmethod
@@ -179,12 +181,15 @@ class VideoInfoCommand(Command):
 
 
 class StartCommand(Command):
-    def __init__(self, tg_client: TgClient):
+    def __init__(self, tg_client: TgClient, user_repo: UserRepository):
         self._name = "/start"
         self._tg_client = tg_client
+        self._user_repository = user_repo
 
     async def execute(self, upd: Update):
         await self._tg_client.send_message(upd.message.chat.id, START_ANSWER)
+        user = User(upd.message.chat.id, upd.message.chat.username, upd.message.chat.first_name, upd.message.chat.last_name)
+        await self._user_repository.save_entity(user)
 
     def is_for(self, command_definer: Update):
         if command_definer.message is None:
