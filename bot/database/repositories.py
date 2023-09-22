@@ -3,7 +3,7 @@ import asyncpg
 from database.models import User
 
 
-class UserRepository:
+class UserRepository: #TODO: прикрутить траназакции
     def __init__(self, host, port, database, user, password):
         self._host = host
         self._port = port
@@ -26,7 +26,9 @@ class UserRepository:
         await conn.execute('''
         CREATE TABLE IF NOT EXISTS users(
         id TEXT PRIMARY KEY,
-        full_name TEXT NOT NULL,
+        username TEXT NOT NULL,
+        firstname TEXT NOT NULL,
+        lastname TEXT NOT NULL,
         role TEXT DEFAULT 'user',
         language TEXT DEFAULT 'en'
         )
@@ -37,14 +39,15 @@ class UserRepository:
     async def save_entity(self, entity: User):
         conn = await self._get_connection()
 
-        await conn.execute("INSERT INTO users (id, full_name, role, language) VALUES ($1, $2, $3)", (entity.id, entity.full_name, entity.role, entity.language))
+        await conn.execute("INSERT INTO users (id, username, firstname, lastname, role, language) VALUES ($1, $2, $3, $4, $5, $6)",
+                           str(entity.id), entity.username, entity.firstname, entity.lastname, entity.role, entity.language)
 
         await conn.close()
 
     async def delete_entity(self, entity: User):
         conn = await self._get_connection()
 
-        await conn.execute("DELETE FROM users WHERE id = ?", (entity.id,))
+        await conn.execute("DELETE FROM users WHERE id = ?", entity.id)
 
         await conn.close()
 
@@ -53,6 +56,6 @@ class UserRepository:
         row = await conn.fetchone("SELECT * FROM entities WHERE id = ?", entity_id)
         await conn.close()
         if row:
-            return User(id=row['id'], full_name=row['full_name'], role=row['role'], language=row['language'])
+            return User(id=row['id'], username=row['username'], firstname=row['firstname'], lastname=row['lastname'], role=row['role'], language=row['language'])
         else:
             return None
