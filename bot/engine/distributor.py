@@ -1,14 +1,16 @@
 import inspect
 
 from clients.tg import Update, TgClient
+from database.repositories import UserRepository
 from engine import commands
 from utils.downloaders import YouTubeDownloader
 
 
 class CommandDistributor:
-    def __init__(self, tg_client: TgClient):
+    def __init__(self, tg_client: TgClient, user_repo: UserRepository):
         self._youtube_downloader = YouTubeDownloader()
         self._tg_client = tg_client
+        self._user_repo = user_repo
         self._commands = self._set_commands()
 
     async def execute(self, upd: Update):
@@ -41,6 +43,9 @@ class CommandDistributor:
                         continue
                     if param.annotation == TgClient:
                         args.append(self._tg_client)
+                        continue
+                    if param.annotation == UserRepository:
+                        args.append(self._user_repo)
                         continue
                     if param.annotation == YouTubeDownloader:
                         args.append(self._youtube_downloader)
