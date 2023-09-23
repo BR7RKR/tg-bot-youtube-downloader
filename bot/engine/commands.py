@@ -188,7 +188,7 @@ class StartCommand(Command):
 
     async def execute(self, upd: Update):
         await self._tg_client.send_message(upd.message.chat.id, START_ANSWER)
-        user = User(upd.message.chat.id, upd.message.chat.username, upd.message.chat.first_name, upd.message.chat.last_name)
+        user = User(str(upd.message.chat.id), upd.message.chat.username, upd.message.chat.first_name, upd.message.chat.last_name)
         await self._user_repository.save_entity(user)
 
     def is_for(self, command_definer: Update):
