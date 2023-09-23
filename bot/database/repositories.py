@@ -3,7 +3,7 @@ import asyncpg
 from database.models import User
 
 
-class UserRepository: #TODO: прикрутить траназакции
+class UserRepository:
     def __init__(self, host, port, database, user, password):
         self._host = host
         self._port = port
