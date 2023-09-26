@@ -46,11 +46,11 @@ class UserRepository:
 
         await conn.close()
 
-    async def delete_entity(self, entity: User):
+    async def delete_entity(self, entity_id):
         conn = await self._get_connection()
 
         async with conn.transaction():
-            await conn.execute("DELETE FROM users WHERE id = ($1)", entity.id)
+            await conn.execute("DELETE FROM users WHERE id = ($1)", entity_id)
 
         await conn.close()
 

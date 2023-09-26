@@ -23,5 +23,5 @@ class TestUserRepository:
         #act
         res = await self._repo.get_entity(id)
         #assert
-        await self._repo.delete_entity(expected)
+        await self._repo.delete_entity(expected.id)
         assert res == expected
