@@ -7,3 +7,4 @@ class MissingTgClientError(Exception):
 class NegativeTimeError(Exception):
     def __init__(self):
         message: str = f"Time value is negative"
+        super().__init__(message)
