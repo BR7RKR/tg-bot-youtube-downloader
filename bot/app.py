@@ -10,6 +10,7 @@ def run():
     bot = Bot(BOT_TOKEN, WORKERS_AMOUNT_DEFAULT)
     try:
         print('engine has started')
+        loop.create_task(bot.init())
         loop.create_task(bot.start())
         loop.run_forever()
     except KeyboardInterrupt:

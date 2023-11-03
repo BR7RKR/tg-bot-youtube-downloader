@@ -20,11 +20,13 @@ class Bot:
         self._worker = None
         self._worker_count = worker_count
 
-    async def start(self):
+    async def init(self):
         self._session = aiohttp.ClientSession()
         self._tg_client = TgClient(self._session, self._token)
         self._poller = Poller(self._tg_client, self._queue)
         self._worker = Worker(self._queue, self._worker_count, CommandDistributor(self._tg_client))
+
+    async def start(self):
         await self._poller.start()
         await self._worker.start()
 
